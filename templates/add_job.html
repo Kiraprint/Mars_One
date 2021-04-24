@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="text-align: center">Adding a Job</h1>
+<form action="" method="post" class="form">
+	{{ form.hidden_tag() }}
+	<p>
+		{{ form.title.label }}<br>
+		{{ form.title(class="form-control") }}<br>
+		{% for error in form.title.errors %}
+	<div class="alert alert-danger" role="alert">
+		{{ error }}
+	</div>
+	{% endfor %}
+	</p>
+
+	<p>
+		{{ form.team_lead.label }}<br>
+		{{ form.team_lead(class="form-control") }}<br>
+		{% for error in form.team_lead.errors %}
+	<div class="alert alert-danger" role="alert">
+		{{ error }}
+	</div>
+	{% endfor %}
+	</p>
+	<p>
+		{{ form.size.label }}<br>
+		{{ form.size(class="form-control") }}<br>
+		{% for error in form.size.errors %}
+	<div class="alert alert-danger" role="alert">
+		{{ error }}
+	</div>
+	{% endfor %}
+	</p>
+	<p>
+		{{ form.collaborators.label }}<br>
+		{{ form.collaborators(class="form-control") }}<br>
+		{% for error in form.collaborators.errors %}
+	<div class="alert alert-danger" role="alert">
+		{{ error }}
+	</div>
+	{% endfor %}
+	</p>
+	<p> {{ form.finished() }} {{ form.finished.label }}</p>
+	<p> {{ form.submit }}</p>
+	<div>{{ message }}</div>
+</form>
+{% endblock %}
+</body>
+</html>

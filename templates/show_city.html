@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hometown</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<h1 align="center">Nostalgy</h1>
+<h1 align="center">{{ user['surname'] }} {{ user['name'] }}</h1>
+<h2 align="center">Hometown {{ user['city_from'] }}</h2>
+
+<img src={{ image }} style="margin-right: auto; margin-left: auto; display: block">
+
+{% endblock %}
+</body>
+</html>

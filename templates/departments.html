@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 style="text-align: center">List of departments</h3>
+<div style="margin-left: 25px;">
+	<a href="/" class="btn btn-secondary">Back to jobs</a>
+	{% if current_user.is_authenticated %}
+	<a href="adddep" class="btn btn-secondary">Add a department</a>
+	{% endif %}
+	{% for dep in departments %}
+	<h3>Department # {{ dep.id }}</h3>
+	{% if current_user.is_authenticated and (current_user == dep.creator or current_user.id == 1) %}
+    <div>
+        <a href="/departments/{{ dep.id }}" class="btn btn-warning">
+            Edit Department
+        </a>
+        <a href="/departments_delete/{{ dep.id }}" class="btn btn-danger">
+            Delete Department
+        </a>
+    </div>
+{% endif %}
+	<table style="margin-bottom: 50px">
+		<tr class="t-header">
+			<th>Title of department</th>
+			<th>Chief</th>
+			<th>Members</th>
+			<th>Department email</th>
+		</tr>
+
+		<tr class="t-content">
+			<td style="width: 40%">{{ dep.title }}</td>
+			{% set cap = session.query(User).filter(User.id == dep.chief).first() %}
+			<td>{{ cap.surname + ' ' + cap.name }}</td>
+			<td>{{ dep.members }}</td>
+			<td>{{ dep.email }}</td>
+		</tr>
+
+	</table>
+
+
+	{% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>

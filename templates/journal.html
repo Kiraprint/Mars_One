@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 style="text-align: center">Works log</h3>
+<div style="margin-left: 25px;">
+	<a href="departments" class="btn btn-secondary">To Departments</a>
+	{% if current_user.is_authenticated %}
+	<a href="addjob" class="btn btn-secondary">Add a job</a>
+	{% endif %}
+	{% for job in jobs %}
+	<h3>Action # {{ job.id }}</h3>
+	{% if current_user.is_authenticated and (current_user == job.creator or current_user.id == 1) %}
+    <div>
+        <a href="/{{ job.id }}" class="btn btn-warning">
+            Edit job
+        </a>
+        <a href="/jobs_delete/{{ job.id }}" class="btn btn-danger">
+            Delete job
+        </a>
+    </div>
+{% endif %}
+	<table style="margin-bottom: 50px">
+		<tr class="t-header">
+			<th>Title of activity</th>
+			<th>Team leader</th>
+			<th>Duration</th>
+			<th>List of collaborators</th>
+			<th>Hazard category</th>
+			<th>Is finished</th>
+		</tr>
+
+		<tr class="t-content">
+			<td style="width: 40%">{{ job.job }}</td>
+			{% set cap = session.query(User).filter(User.id == job.team_leader).first() %}
+			<td>{{ cap.surname + ' ' + cap.name }}</td>
+			<td>{{ job.work_size }} hours</td>
+			<td>{{ job.collaborators }}</td>
+			<td>{{ job.categories|join(', ') }}</td>
+			{% if job.is_finished == 0 %}
+			<td style="background-color: pink">Is not finished</td>
+			{% else %}
+			<td>Is finished</td>
+			{% endif %}
+		</tr>
+
+	</table>
+
+
+	{% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
